@@ -60,11 +60,11 @@ var을 let으로 바꿨을 때 for 루프 내부의 i 값을 콘솔에 출력할
 #3 클로저 함수
 var arr = []
 for(var i = 0; i < 5; i++){
-    arr[i] = function(id) {
-        return function(){
-            return id;
+    arr[i] = function(id) {    //매개변수 id에 인자값 전역변수 i가 들어옴
+        return function(){   //내부함수 호출되면서 지역변수 id 값 반환
+            return id; 
         }
-    }(i);
+    }(i);   //외부함수 호출하면서 전역변수 인자 전달
 }
 for(var index in arr) {
     console.log(arr[index]());
