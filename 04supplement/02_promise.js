@@ -1,4 +1,4 @@
-// 1. promise 객체 : 비동기 처리 하기 위한 방식
+// 1. promise 객체 : 비동기 처리 하기 위한 방식 : .then(...) 형태
 
 // promise 성공시 resolve, 실패시 reject 함수 호출
 // 1초뒤 성공하는 상황
