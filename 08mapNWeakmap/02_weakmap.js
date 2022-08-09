@@ -33,4 +33,4 @@ console.log(myarea2.height); // => undefined : 외부에서 접근 불가능
 // 장점 : 클래스 자체가 객체에 대한 추가정보 가지고 있지 않음
 
 myarea = null;
-console.log(wm.has(myarea));
+console.log(wm.has(myarea)); // false

@@ -9,4 +9,16 @@ const SETTING = {
   maxNumber: 45,
 };
 
-function getRandomNumber(maxNumber) {}
+let { count, maxNumber } = SETTING;
+let numSet = new Set();
+
+function getRandomNumber(maxNumber) {
+  let num = Math.floor(Math.random() * 45 + 1);
+  numSet.add(num);
+}
+
+for (let i = 0; i < count; i++) {
+  getRandomNumber(maxNumber);
+}
+
+console.log(numSet);
