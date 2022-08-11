@@ -1,0 +1,84 @@
+// https://ko.javascript.info/weakmap-weakset
+
+Map : set, get, has, delete, size, keys(), values(), entries()등 메서드 제공
+- set : 키, 값 설정
+- get : 값 불러오기
+- size :  개수
+
+** Map의 키로 함수와 객체 사용 가능
+const tests = new Map();
+tests.set( () => 2+2, 4);
+
+** weakMap 특징
+1. 가지고 있는 요소 전체를 반복 구문으로 탐색할 방법이 없다 ; keys(), values(), entries() 메서드 지원 안함
+
+
+2. 참조 가지고 있는 객체만 키로 사용 가능
+
+// 3. weakmap에서는 key가 garbage collect 대상 되면 weakmap 데이터가 자동 삭제
+// cf. map은 key가 garbage collect 대상 되더라도 데이터가 삭제되지는 않음
+
+
+
+// *** 워크맵 유스 케이스
+// # 1 :  부차적인 데이터 저장할 공간 필요할 때 유용
+
+1;
+weakMap.set(john, "비밀문서"); // <= john은 외부 코드에 속한 객체
+// john 사망하면 , 비밀문서 자동 파기 됨
+
+2;
+//visitCount.js
+
+let visitsCountMap = new WeakMap(); // 워크맵에 사용자의 방문 횟수를 저장함
+
+// 사용자가 방문하면 방문 횟수를 늘려줍니다.
+function countUser(user) {
+  let count = visitsCountMap.get(user) || 0;
+  visitsCountMap.set(user, count + 1);
+}
+
+// main.js : john이라는 사용자가 방문했을 때
+
+let john = { name: "John" };
+
+countUser(john); // John의 방문 횟수를 증가시킵니다.
+
+// *******************
+// John의 방문 횟수를 셀 필요가 없어지면 아래와 같이 john을 null로 덮어씁니다.
+john = null;
+
+// # 2 : 캐싱
+// : 시간 오래 걸리는 작업 결과를 저장해 연산 시간과 비용 절약해주는 기법
+// : 동일한 함수 여러번 호출할 때, 최초 호출 시 반환된 값을 저장해 두었다가 그 다음엔 함수 호출 대신 저장된 값을 사용
+
+// ****
+let cache = new WeakMap();
+
+// 연산을 수행하고 그 결과를 위크맵에 저장합니다.
+function process(obj) {
+  if (!cache.has(obj)) {
+    let result = /* 연산 수행 */ obj;
+
+    cache.set(obj, result);
+  }
+
+  return cache.get(obj);
+}
+
+// main.js
+let obj = {
+  /* ... 객체 ... */
+};
+
+let result1 = process(obj);
+let result2 = process(obj);
+
+// 객체가 쓸모없어지면 아래와 같이 null로 덮어씁니다.
+obj = null;
+
+// ** 일반 map 사용했다면 null로 덮어써도 객체가 남아있어서 cache를 수동으로 청소해야 함
+
+// 이 예시에선 맵을 사용한 예시처럼 cache.size를 사용할 수 없습니다.
+// 하지만 obj가 garbage collect의 대상이 되므로, 캐싱된 데이터 역시 메모리에서 삭제될 겁니다.
+// 삭제가 진행되면 cache엔 그 어떤 요소도 남아있지 않을겁니다.

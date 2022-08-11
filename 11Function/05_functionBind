@@ -1,0 +1,32 @@
+함수 바인딩
+: setTimeout에 메서드 전달할 때처럼, 객체 메서드를 콜백으로 전달할 때 
+'this' 정보가 사라지는 문제가 생기는데 이를 해결하기 위한 방법
+
+- 객체 메서드가 객체 내부가 아닌 다른 곳에 전달되어 호출되면 this tkfkwla
+
+let user={
+    firstName : 'john',
+    sayHi(){
+        alert (`Hello, ${this.firstName}`);
+    }
+};
+
+setTimeout(user.sayHi, 1000) // => Hello, undefined
+
+방법 1. 래퍼 함수 사용
+
+setTimeout(function(){
+    user.sayHi();
+},1000);
+ // => Hello, John
+
+
+ 방법 2. bind : 내장 메서드
+ let boundFunc = func.bind(context)  
+ // => 함수처럼 호출 가능한 특수객체(exotic object)를 반환, 
+ // 이 객체 호출하면 this가 context로 고정된 함수 func이 반환됨
+따라서 boundFunc을 호출하면 this가 고정된 func을 호출하는 것과 동일함
+
+let  sayHi = user.sayHi.bind(user);
+sayHi();  // Hello, John!
+setTimeout(sayHi ,1000);  // Hello, John!
