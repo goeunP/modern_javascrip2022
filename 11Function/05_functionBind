@@ -3,6 +3,9 @@
 함수 바인딩
 : setTimeout에 메서드 전달할 때처럼, 객체 메서드를 콜백으로 전달할 때 
 'this' 정보가 사라지는 문제가 생기는데 이를 해결하기 위한 방법
++ this 뿐만 아니라 인수도 바인딩 가능 / bind 두번 이상 적용해도 처음 바인딩한 내용이 고정됨
+( func.bind(context, ..args))는 this가 context로 고정되고 인수도 고정된 함수 func 반환
+
 
 - 객체 메서드가 객체 내부가 아닌 다른 곳에 전달되어 호출되면 this 사라짐
 
@@ -22,6 +25,8 @@ setTimeout(function(){
 },1000);
  // => Hello, John
 
+: 외부 렉시컬 환경에서 user 받아서 보통때처럼 메서드 호출하기 때문
+but setTimeout이 트리거 되기 전에(1초 지나기 전에) user가 변경되면, 변경된 객체의 메서드 호출해서 취약함 
 
  방법 2. bind : 내장 메서드
  let boundFunc = func.bind(context)  
@@ -32,3 +37,4 @@ setTimeout(function(){
 let  sayHi = user.sayHi.bind(user);
 sayHi();  // Hello, John!
 setTimeout(sayHi ,1000);  // Hello, John!
+
