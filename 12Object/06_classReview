@@ -1,0 +1,20 @@
+! 클래스는 객체 지향 프로그래밍에서 특정 객체 생성하기 위해 변수와 메소드를 정의하는
+일종의 틀로, 객체를 정의하기 위한 상태(변수)와 메서드(함수)로 구성됨
+
+class MyClass{
+    constructor(){...}
+    method1(){...}
+    method2(){...}
+}
+이렇게 만들고 new MyClass()를 호출하면 정의해둔 메서드가 들어 있는 객체 성성됨
+** constructor()는 new에 의해 자동으로 호출됨
+
+class User{
+    constructor(name){
+        this.name=name;
+    }
+    sayHi(){alert(this.name)}
+}
+
+let user=new User('john');
+user.sayHi(); // user객체 안에 sayHi() 메서드 내장되어 있기 때문에 호출 가능

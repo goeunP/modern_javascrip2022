@@ -1,8 +1,10 @@
+// https://ko.javascript.info/bind
+
 함수 바인딩
 : setTimeout에 메서드 전달할 때처럼, 객체 메서드를 콜백으로 전달할 때 
 'this' 정보가 사라지는 문제가 생기는데 이를 해결하기 위한 방법
 
-- 객체 메서드가 객체 내부가 아닌 다른 곳에 전달되어 호출되면 this tkfkwla
+- 객체 메서드가 객체 내부가 아닌 다른 곳에 전달되어 호출되면 this 사라짐
 
 let user={
     firstName : 'john',
